@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+  "name": "refined slideshare",
+  "version": "0.1",
+  "description": "make slideshare's user experience better",
+  "permissions": [
+    "activeTab",
+    "https://www.slideshare.net/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.slideshare.net/*"
+      ],
+      "js": ["content.js"]
+    }
+  ]
+}
