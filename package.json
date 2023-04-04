@@ -1,5 +1,5 @@
 {
-  "name": "no-ad-slideshare",
+  "name": "refined-slideshare",
   "version": "0.0.1",
   "main": "index.js",
   "repository": "https://github.com/mkusaka/no-ad-slideshare.git",
@@ -7,10 +7,6 @@
   "license": "MIT",
   "devDependencies": {
     "@types/chrome": "^0.0.228",
-    "gh-pages": "^5.0.0",
     "prettier": "^2.8.7"
-  },
-  "scripts": {
-    "deploy": "gh-pages -d site"
   }
 }
