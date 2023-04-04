@@ -1,6 +1,6 @@
 {
   "name": "refined-slideshare",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "main": "index.js",
   "repository": "https://github.com/mkusaka/no-ad-slideshare.git",
   "author": "mkusaka <hinoshita1992@gmail.com>",
@@ -8,5 +8,8 @@
   "devDependencies": {
     "@types/chrome": "^0.0.228",
     "prettier": "^2.8.7"
+  },
+  "scripts": {
+    "package": "rm -f pacakge.zip && zip -r package.zip . -x '.git/**' './node_modules/**' '.idea/**' 'yarn.lock' 'package.json' '.gitignore'"
   }
 }
