@@ -1,5 +1,8 @@
 name: release artifact
 
+permissions:
+  contents: write
+
 on:
   push:
     branches-ignore:
