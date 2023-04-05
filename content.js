@@ -8,7 +8,7 @@ function findEmbedURL() {
   return null;
 }
 
-const parent = document.getElementById("new-player").parentElement;
-if (parent) {
-  parent.innerHTML = `<iframe src="${findEmbedURL()}" id="new-player" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen>`;
+const container = document.getElementById("new-player");
+if (container) {
+  container.innerHTML = `<iframe src="${findEmbedURL()}" width="1280" height="1010"frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px;" allowfullscreen>`;
 }
