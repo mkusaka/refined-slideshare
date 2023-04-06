@@ -7,4 +7,4 @@ Chrome extension which provides a better slideshare experience
 
 # chrome store
 
-https://chrome.google.com/webstore/detail/refined-slideshare/aaoppniefnfcljndkcodeanklbanedeo?hl=ja&authuser=0
+https://chrome.google.com/webstore/detail/refined-slideshare/aaoppniefnfcljndkcodeanklbanedeo
