@@ -6,4 +6,5 @@ Chrome extension which provides a better slideshare experience
 - remove ad in slide
 
 # chrome store
-TBD
+
+https://chrome.google.com/webstore/detail/refined-slideshare/aaoppniefnfcljndkcodeanklbanedeo?hl=ja&authuser=0
