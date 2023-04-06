@@ -10,5 +10,7 @@ function findEmbedURL() {
 
 const container = document.getElementById("new-player");
 if (container) {
-  container.innerHTML = `<iframe src="${findEmbedURL()}" width="1280" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%; aspect-ratio: 1280 / 1010;" allowfullscreen>`;
+  const width = container.getBoundingClientRect().width;
+  const height = container.getBoundingClientRect().height;
+  container.innerHTML = `<iframe src="${findEmbedURL()}" width="${width}" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%; aspect-ratio: ${width} / ${height};" allowfullscreen>`;
 }
