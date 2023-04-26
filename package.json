@@ -7,9 +7,12 @@
   "license": "MIT",
   "devDependencies": {
     "@types/chrome": "^0.0.228",
+    "esbuild": "^0.17.18",
     "prettier": "^2.8.7"
   },
   "scripts": {
-    "package": "rm -f pacakge.zip && zip -r package.zip . -x '.git/**' './node_modules/**' '.idea/**' 'yarn.lock' 'package.json' '.gitignore'"
+    "package": "yarn build && rm -f pacakge.zip && zip -r package.zip . -x '.git/**' './node_modules/**' '.idea/**' 'yarn.lock' 'package.json' '.gitignore'",
+    "build": "esbuild content.ts --bundle --target=chrome100 --outfile=content.js",
+    "watch": "esbuild content.ts --bundle --target=chrome100 --watch --outfile=content.js"
   }
 }
