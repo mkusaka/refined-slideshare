@@ -18,8 +18,8 @@ const container = document.getElementById("new-player");
 if (container) {
   const iframeInfo = seekIframeInfo();
   if (iframeInfo) {
-    const { width: iframeWidth, height: iframeHeight, url } = iframeInfo;
-    const width = container.getBoundingClientRect().width;
-    container.innerHTML = `<iframe src="${url}" width="${width}" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%; aspect-ratio: ${iframeWidth} / ${iframeHeight};" allowfullscreen>`;
+    const { url } = iframeInfo;
+    const { width, height } = container.getBoundingClientRect();
+    container.innerHTML = `<iframe src="${url}" width="${width}" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%; aspect-ratio: ${width} / ${height};" allowfullscreen>`;
   }
 }
