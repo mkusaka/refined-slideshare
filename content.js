@@ -10,21 +10,21 @@
     return target;
   }
   var defaultConverter = {
-    read: function (value) {
+    read: function(value) {
       if (value[0] === '"') {
         value = value.slice(1, -1);
       }
       return value.replace(/(%[\dA-F]{2})+/gi, decodeURIComponent);
     },
-    write: function (value) {
+    write: function(value) {
       return encodeURIComponent(value).replace(
         /%(2[346BF]|3[AC-F]|40|5[BDE]|60|7[BCD])/g,
         decodeURIComponent
       );
-    },
+    }
   };
   function init(converter, defaultAttributes) {
-    function set2(name, value, attributes) {
+    function set(name, value, attributes) {
       if (typeof document === "undefined") {
         return;
       }
@@ -35,9 +35,7 @@
       if (attributes.expires) {
         attributes.expires = attributes.expires.toUTCString();
       }
-      name = encodeURIComponent(name)
-        .replace(/%(2[346B]|5E|60|7C)/g, decodeURIComponent)
-        .replace(/[()]/g, escape);
+      name = encodeURIComponent(name).replace(/%(2[346B]|5E|60|7C)/g, decodeURIComponent).replace(/[()]/g, escape);
       var stringifiedAttributes = "";
       for (var attributeName in attributes) {
         if (!attributes[attributeName]) {
@@ -49,11 +47,10 @@
         }
         stringifiedAttributes += "=" + attributes[attributeName].split(";")[0];
       }
-      return (document.cookie =
-        name + "=" + converter.write(value, name) + stringifiedAttributes);
+      return document.cookie = name + "=" + converter.write(value, name) + stringifiedAttributes;
     }
     function get(name) {
-      if (typeof document === "undefined" || (arguments.length && !name)) {
+      if (typeof document === "undefined" || arguments.length && !name) {
         return;
       }
       var cookies = document.cookie ? document.cookie.split("; ") : [];
@@ -67,33 +64,34 @@
           if (name === found) {
             break;
           }
-        } catch (e) {}
+        } catch (e) {
+        }
       }
       return name ? jar[name] : jar;
     }
     return Object.create(
       {
-        set: set2,
+        set,
         get,
-        remove: function (name, attributes) {
-          set2(
+        remove: function(name, attributes) {
+          set(
             name,
             "",
             assign({}, attributes, {
-              expires: -1,
+              expires: -1
             })
           );
         },
-        withAttributes: function (attributes) {
+        withAttributes: function(attributes) {
           return init(this.converter, assign({}, this.attributes, attributes));
         },
-        withConverter: function (converter2) {
+        withConverter: function(converter2) {
           return init(assign({}, this.converter, converter2), this.attributes);
-        },
+        }
       },
       {
         attributes: { value: Object.freeze(defaultAttributes) },
-        converter: { value: Object.freeze(converter) },
+        converter: { value: Object.freeze(converter) }
       }
     );
   }
@@ -119,7 +117,7 @@
       container.innerHTML = `<iframe src="${url}" width="${width}" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%; aspect-ratio: ${width} / ${height};" allowfullscreen>`;
     }
   }
-  (void 0)("scribd_ad_exit_slideshow_page", true);
+  api.set("scribd_ad_exit_slideshow_page", true);
 })();
 /*! Bundled license information:
 

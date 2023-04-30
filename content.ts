@@ -1,4 +1,4 @@
-import * as Cookies from "js-cookie";
+import Cookies from "js-cookie";
 
 function seekIframeInfo() {
   const propsElement = document.getElementById("__NEXT_DATA__");
