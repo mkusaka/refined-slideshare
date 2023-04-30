@@ -7,6 +7,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/chrome": "^0.0.228",
+    "@types/js-cookie": "^3.0.3",
     "esbuild": "^0.17.18",
     "prettier": "^2.8.7"
   },
@@ -14,5 +15,8 @@
     "package": "yarn build && rm -f pacakge.zip && zip -r package.zip . -x '.git/**' './node_modules/**' '.idea/**' 'yarn.lock' 'package.json' '.gitignore'",
     "build": "esbuild content.ts --bundle --target=chrome100 --outfile=content.js",
     "watch": "esbuild content.ts --bundle --target=chrome100 --watch --outfile=content.js"
+  },
+  "dependencies": {
+    "js-cookie": "^3.0.5"
   }
 }
