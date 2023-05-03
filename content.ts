@@ -63,6 +63,23 @@ if (container) {
       view: iframe.contentWindow
     }));
   }
+
+  // TODO: get slide params & history.push to next slide with params
+  // parse slide params
+  // var urlSearchParams = new URLSearchParams(window.location.search);
+
+  // console.log({urlSearchParams})
+  // var slideNumber = urlSearchParams.get('slide');
+  // var nextSlideNumber = 1
+  // if (slideNumber) {
+  //   var slideNumber = parseInt(slideNumber, 10);
+  //   nextSlideNumber = Math.max(slideNumber - 1, 1);
+  // }
+  // var url = new URL(window.location.href);
+  // urlSearchParams.set('slide', nextSlideNumber);
+  // url.search = urlSearchParams;
+  // console.log({url: url.toString()})
+  // window.history.pushState({}, '', url.toString());
 })(event, this.nextElementSibling.nextElementSibling)"></div>
 
 <!-- Right overlay -->
@@ -83,6 +100,33 @@ if (container) {
       view: iframe.contentWindow
     }));
   }
+
+  // TODO: get slide params & history.push to next slide with params
+  // var propsElement = document.getElementById('__NEXT_DATA__');
+  // var propsJSON = JSON.parse(propsElement.innerHTML);
+  // var totalSlides = props?.props?.pageProps?.slideshow?.totalSlides;
+  // console.log({ totalSlides })
+
+  // if (!totalSlides) {
+  //   console.log('cannot find total slides')
+  //   return;
+  // }
+
+  // // parse slide params
+  // var urlSearchParams = new URLSearchParams(window.location.search);
+
+  // console.log({urlSearchParams})
+  // var slideNumber = urlSearchParams.get('slide');
+  // var nextSlideNumber = 2
+  // if (slideNumber) {
+  //   var slideNumber = parseInt(slideNumber, 10);
+  //   nextSlideNumber = Math.max(slideNumber + 1, totalSlides);
+  // }
+  // var url = new URL(window.location.href);
+  // urlSearchParams.set('slide', nextSlideNumber);
+  // url.search = urlSearchParams;
+  // console.log({url: url.toString()})
+  // window.history.pushState({}, '', url.toString());
 })(event, this.nextElementSibling)"></div>
 <iframe src="${newURL}" width="${width}" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%; aspect-ratio: ${width} / ${height};" allowfullscreen>`;
   }
@@ -110,6 +154,7 @@ Cookies.set("scribd_ad_exit_slideshow_page", true);
   // var propsElement = document.getElementById("__NEXT_DATA__");
   // var propsJSON = JSON.parse(propsElement.innerHTML);
   // var totalSlides = props?.props?.pageProps?.slideshow?.totalSlides;
+  // console.log({ totalSlides })
 
   // if (!totalSlides) {
   //   console.log("cannot find total slides")
