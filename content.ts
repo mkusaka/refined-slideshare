@@ -9,10 +9,10 @@ function seekIframeInfo() {
   const propsJSON = JSON.parse(propsElement.innerHTML);
   const iframeEmbed:
     | {
-      height: number;
-      width: number;
-      url: string;
-    }
+        height: number;
+        width: number;
+        url: string;
+      }
     | undefined = propsJSON?.props?.pageProps?.slideshow?.iframeEmbed;
   if (!iframeEmbed) {
     console.log("cannot find valid iframeEmbed");
@@ -46,139 +46,99 @@ if (container) {
     const newURL = slide ? generateURL(url, slide) : url;
     const { width, height } = container.getBoundingClientRect();
     container.innerHTML = `<!-- Left overlay -->
-<div style="position: absolute; width: 20%; height: calc(100% - 50px); z-index: 1; cursor: url(/images/ssplayer/left-pointer.png) 25 25,auto;" id="left-overlay-refined-slideshare"></div>
+<div style="position: absolute; width: 20%; height: calc(100% - 50px); z-index: 1; cursor: url(/images/ssplayer/left-pointer.png) 25 25,auto;" id="left-overlay-rfs"></div>
 
 <!-- Right overlay -->
-<div style="position: absolute; top: 15%; right: 0; width: 20%; height: calc(15% - 50px); z-index: 1; cursor: url(/images/ssplayer/right-pointer.png) 25 25,auto;" id="left-overlay-refined-slideshare"></div>
-<iframe src="${newURL}" width="${width}" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%; aspect-ratio: ${width} / ${height};" allowfullscreen id="iframe-refined-slideshare">`;
-    const left = document.querySelector("#left-overlay-refined-slideshare");
+<div style="position: absolute; top: 15%; right: 0; width: 20%; height: calc(100% - 15% - 50px); z-index: 1; cursor: url(/images/ssplayer/right-pointer.png) 25 25,auto;" id="right-overlay-rfs"></div>
+<iframe src="${newURL}" width="${width}" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%; aspect-ratio: ${width} / ${height};" allowfullscreen id="iframe-rfs">`;
+    const left = document.querySelector("#left-overlay-rfs");
     left?.addEventListener("click", (event) => {
-      const iframe = document.querySelector("#iframe-refined-slideshare");
-      console.log({ event, iframe });
+      const iframe = document.querySelector("#iframe-rfs");
       const rect = iframe.getBoundingClientRect();
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
 
       // Access to elements in iframe
-      const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+      const iframeDocument =
+        iframe.contentDocument || iframe.contentWindow.document;
       const clickedElement = iframeDocument.elementFromPoint(x, y);
       if (clickedElement) {
         // Simulate click event
-        clickedElement.dispatchEvent(new MouseEvent('click', {
-          bubbles: true,
-          cancelable: true,
-          view: iframe.contentWindow
-        }));
+        clickedElement.dispatchEvent(
+          new MouseEvent("click", {
+            bubbles: true,
+            cancelable: true,
+            view: iframe.contentWindow,
+          })
+        );
       }
 
-      // TODO: get slide params & history.push to next slide with params
       // parse slide params
-      // var urlSearchParams = new URLSearchParams(window.location.search);
+      const urlSearchParams = new URLSearchParams(window.location.search);
 
-      // console.log({urlSearchParams})
-      // var slideNumber = urlSearchParams.get('slide');
-      // var nextSlideNumber = 1
-      // if (slideNumber) {
-      //   var slideNumber = parseInt(slideNumber, 10);
-      //   nextSlideNumber = Math.max(slideNumber - 1, 1);
-      // }
-      // var url = new URL(window.location.href);
-      // urlSearchParams.set('slide', nextSlideNumber);
-      // url.search = urlSearchParams;
-      // console.log({url: url.toString()})
-      // window.history.pushState({}, '', url.toString());
-    })
-    const right = document.querySelector("#right-overlay-refined-slideshare");
+      let slideNumber = urlSearchParams.get("slide");
+      let nextSlideNumber = 1;
+      if (slideNumber) {
+        slideNumber = parseInt(slideNumber, 10);
+        nextSlideNumber = Math.max(slideNumber - 1, 1);
+      }
+      const url = new URL(window.location.href);
+      if (nextSlideNumber === 1) {
+        urlSearchParams.delete("slide");
+        url.search = urlSearchParams;
+      } else {
+        urlSearchParams.set("slide", nextSlideNumber);
+        url.search = urlSearchParams;
+      }
+      window.history.pushState({}, "", url.toString());
+    });
+    const right = document.querySelector("#right-overlay-rfs");
     right?.addEventListener("click", (event) => {
-      const iframe = document.querySelector("#iframe-refined-slideshare");
-      console.log({ event, iframe });
+      const iframe = document.querySelector("#iframe-rfs");
       const rect = iframe.getBoundingClientRect();
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
 
       // Access to elements in iframe
-      const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+      const iframeDocument =
+        iframe.contentDocument || iframe.contentWindow.document;
       const clickedElement = iframeDocument.elementFromPoint(x, y);
       if (clickedElement) {
         // Simulate click event
-        clickedElement.dispatchEvent(new MouseEvent('click', {
-          bubbles: true,
-          cancelable: true,
-          view: iframe.contentWindow
-        }));
+        clickedElement.dispatchEvent(
+          new MouseEvent("click", {
+            bubbles: true,
+            cancelable: true,
+            view: iframe.contentWindow,
+          })
+        );
       }
 
-      // TODO: get slide params & history.push to next slide with params
-      // var propsElement = document.getElementById('__NEXT_DATA__');
-      // var propsJSON = JSON.parse(propsElement.innerHTML);
-      // var totalSlides = props?.props?.pageProps?.slideshow?.totalSlides;
-      // console.log({ totalSlides })
+      const propsElement = document.getElementById("__NEXT_DATA__");
+      const propsJSON = JSON.parse(propsElement.innerHTML);
+      const totalSlides = propsJSON?.props?.pageProps?.slideshow?.totalSlides;
 
-      // if (!totalSlides) {
-      //   console.log('cannot find total slides')
-      //   return;
-      // }
+      if (!totalSlides) {
+        console.log("cannot find total slides");
+        return;
+      }
 
-      // // parse slide params
-      // var urlSearchParams = new URLSearchParams(window.location.search);
+      // parse slide params
+      const urlSearchParams = new URLSearchParams(window.location.search);
 
-      // console.log({urlSearchParams})
-      // var slideNumber = urlSearchParams.get('slide');
-      // var nextSlideNumber = 2
-      // if (slideNumber) {
-      //   var slideNumber = parseInt(slideNumber, 10);
-      //   nextSlideNumber = Math.max(slideNumber + 1, totalSlides);
-      // }
-      // var url = new URL(window.location.href);
-      // urlSearchParams.set('slide', nextSlideNumber);
-      // url.search = urlSearchParams;
-      // console.log({url: url.toString()})
-      // window.history.pushState({}, '', url.toString());
-    })
+      let slideNumber = urlSearchParams.get("slide");
+      let nextSlideNumber = 2;
+      if (slideNumber) {
+        slideNumber = parseInt(slideNumber, 10);
+        nextSlideNumber = Math.min(slideNumber + 1, totalSlides);
+      }
+      const url = new URL(window.location.href);
+      urlSearchParams.set("slide", nextSlideNumber);
+      url.search = urlSearchParams;
+      window.history.pushState({}, "", url.toString());
+    });
   }
 }
 
+// hide modal ads as default
 Cookies.set("scribd_ad_exit_slideshow_page", true);
-
-  // parse slide params
-  // var urlSearchParams = new URLSearchParams(window.location.search);
-
-  // console.log({urlSearchParams})
-  // var slideNumber = urlSearchParams.get('slide');
-  // var nextSlideNumber = 1
-  // if (slideNumber) {
-  //   var slideNumber = parseInt(slideNumber, 10);
-  //   nextSlideNumber = Math.max(slideNumber - 1, 1);
-  // }
-  // var url = new URL(window.location.href);
-  // urlSearchParams.set("slide", nextSlideNumber);
-  // url.search = urlSearchParams;
-  // console.log({url: url.toString()})
-  // window.history.pushState({}, '', url.toString());
-
-  // totalSlide
-  // var propsElement = document.getElementById("__NEXT_DATA__");
-  // var propsJSON = JSON.parse(propsElement.innerHTML);
-  // var totalSlides = props?.props?.pageProps?.slideshow?.totalSlides;
-  // console.log({ totalSlides })
-
-  // if (!totalSlides) {
-  //   console.log("cannot find total slides")
-  //   return;
-  // }
-
-  // // parse slide params
-  // var urlSearchParams = new URLSearchParams(window.location.search);
-
-  // console.log({urlSearchParams})
-  // var slideNumber = urlSearchParams.get('slide');
-  // var nextSlideNumber = 2
-  // if (slideNumber) {
-  //   var slideNumber = parseInt(slideNumber, 10);
-  //   nextSlideNumber = Math.max(slideNumber + 1, totalSlides);
-  // }
-  // var url = new URL(window.location.href);
-  // urlSearchParams.set("slide", nextSlideNumber);
-  // url.search = urlSearchParams;
-  // console.log({url: url.toString()})
-  // window.history.pushState({}, '', url.toString());
