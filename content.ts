@@ -64,23 +64,39 @@ function proxyClickEventToSlideIFrame(event: Event) {
 }
 
 function getSlideNumber() {
-      // parse slide params
+  // parse slide params
   const urlSearchParams = new URLSearchParams(window.location.search);
   const slideNumber = urlSearchParams.get("slide");
-  if (slideNumber)  {
+  if (slideNumber) {
     return parseInt(slideNumber, 10);
   }
   return null;
 }
-function setSlideSearchParams(slideNumber: number,withDelete = false) {
-      // parse slide params
+function setSlideSearchParams(slideNumber: number, withDelete = false) {
+  // parse slide params
   const urlSearchParams = new URLSearchParams(window.location.search);
   if (withDelete) {
     urlSearchParams.delete("slide");
   } else {
     urlSearchParams.set("slide", slideNumber);
   }
-  return urlSearchParams
+  return urlSearchParams;
+}
+
+const images: HTMLImageElement[] = [];
+function prefetchImages() {
+  const slideImages =
+    getPropsData()?.props?.pageProps?.slideshow?.slideImages || [];
+
+  slideImages.forEach((image) => {
+    const url = image.baseUrl;
+    console.log({url})
+    if (url) {
+      let img = new Image();
+      img.src = url;
+      images.push(img);
+    }
+  });
 }
 
 const container = document.getElementById("new-player");
@@ -120,9 +136,10 @@ if (container) {
     });
     const right = document.querySelector("#right-overlay-rfs");
     right?.addEventListener("click", (event) => {
-      proxyClickEventToSlideIFrame(event)
+      proxyClickEventToSlideIFrame(event);
 
-      const totalSlides = getPropsData()?.props?.pageProps?.slideshow?.totalSlides;
+      const totalSlides =
+        getPropsData()?.props?.pageProps?.slideshow?.totalSlides;
 
       if (!totalSlides) {
         console.log("cannot find total slides");
@@ -147,3 +164,4 @@ if (container) {
 
 // hide modal ads as default
 Cookies.set("scribd_ad_exit_slideshow_page", true);
+// prefetchImages();
