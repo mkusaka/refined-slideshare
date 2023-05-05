@@ -4,16 +4,20 @@ import { createBrowserHistory } from "history";
 
 const history = createBrowserHistory();
 
-function seekIframeInfo() {
+function getPropsData() {
   const propsElement = document.getElementById("__NEXT_DATA__");
   const propsJSON = JSON.parse(propsElement.innerHTML);
+  return propsJSON;
+}
+
+function seekIframeInfo() {
   const iframeEmbed:
     | {
         height: number;
         width: number;
         url: string;
       }
-    | undefined = propsJSON?.props?.pageProps?.slideshow?.iframeEmbed;
+    | undefined = getPropsData()?.props?.pageProps?.slideshow?.iframeEmbed;
   if (!iframeEmbed) {
     console.log("cannot find valid iframeEmbed");
     return null;
@@ -37,6 +41,48 @@ function generateURL(url: string, slide: number) {
   return parsedURL.toString();
 }
 
+function proxyClickEventToSlideIFrame(event: Event) {
+  const iframe = document.querySelector("#iframe-rfs");
+  const rect = iframe.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+
+  // Access to elements in iframe
+  const iframeDocument =
+    iframe.contentDocument || iframe.contentWindow.document;
+  const clickedElement = iframeDocument.elementFromPoint(x, y);
+  if (clickedElement) {
+    // Simulate click event
+    clickedElement.dispatchEvent(
+      new MouseEvent("click", {
+        bubbles: true,
+        cancelable: true,
+        view: iframe.contentWindow,
+      })
+    );
+  }
+}
+
+function getSlideNumber() {
+      // parse slide params
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const slideNumber = urlSearchParams.get("slide");
+  if (slideNumber)  {
+    return parseInt(slideNumber, 10);
+  }
+  return null;
+}
+function setSlideSearchParams(slideNumber: number,withDelete = false) {
+      // parse slide params
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  if (withDelete) {
+    urlSearchParams.delete("slide");
+  } else {
+    urlSearchParams.set("slide", slideNumber);
+  }
+  return urlSearchParams
+}
+
 const container = document.getElementById("new-player");
 if (container) {
   const iframeInfo = seekIframeInfo();
@@ -47,39 +93,19 @@ if (container) {
     const { width, height } = container.getBoundingClientRect();
     container.innerHTML = `<!-- Left overlay -->
 <div style="position: absolute; width: 20%; height: calc(100% - 50px); z-index: 1; cursor: url(/images/ssplayer/left-pointer.png) 25 25,auto;" id="left-overlay-rfs"></div>
-
 <!-- Right overlay -->
 <div style="position: absolute; top: 15%; right: 0; width: 20%; height: calc(100% - 15% - 50px); z-index: 1; cursor: url(/images/ssplayer/right-pointer.png) 25 25,auto;" id="right-overlay-rfs"></div>
 <iframe src="${newURL}" width="${width}" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%; aspect-ratio: ${width} / ${height};" allowfullscreen id="iframe-rfs">`;
     const left = document.querySelector("#left-overlay-rfs");
     left?.addEventListener("click", (event) => {
-      const iframe = document.querySelector("#iframe-rfs");
-      const rect = iframe.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-
-      // Access to elements in iframe
-      const iframeDocument =
-        iframe.contentDocument || iframe.contentWindow.document;
-      const clickedElement = iframeDocument.elementFromPoint(x, y);
-      if (clickedElement) {
-        // Simulate click event
-        clickedElement.dispatchEvent(
-          new MouseEvent("click", {
-            bubbles: true,
-            cancelable: true,
-            view: iframe.contentWindow,
-          })
-        );
-      }
+      proxyClickEventToSlideIFrame(event);
 
       // parse slide params
       const urlSearchParams = new URLSearchParams(window.location.search);
 
-      let slideNumber = urlSearchParams.get("slide");
+      const slideNumber = getSlideNumber();
       let nextSlideNumber = 1;
       if (slideNumber) {
-        slideNumber = parseInt(slideNumber, 10);
         nextSlideNumber = Math.max(slideNumber - 1, 1);
       }
       const url = new URL(window.location.href);
@@ -90,33 +116,13 @@ if (container) {
         urlSearchParams.set("slide", nextSlideNumber);
         url.search = urlSearchParams;
       }
-      window.history.pushState({}, "", url.toString());
+      history.push(url.toString());
     });
     const right = document.querySelector("#right-overlay-rfs");
     right?.addEventListener("click", (event) => {
-      const iframe = document.querySelector("#iframe-rfs");
-      const rect = iframe.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
+      proxyClickEventToSlideIFrame(event)
 
-      // Access to elements in iframe
-      const iframeDocument =
-        iframe.contentDocument || iframe.contentWindow.document;
-      const clickedElement = iframeDocument.elementFromPoint(x, y);
-      if (clickedElement) {
-        // Simulate click event
-        clickedElement.dispatchEvent(
-          new MouseEvent("click", {
-            bubbles: true,
-            cancelable: true,
-            view: iframe.contentWindow,
-          })
-        );
-      }
-
-      const propsElement = document.getElementById("__NEXT_DATA__");
-      const propsJSON = JSON.parse(propsElement.innerHTML);
-      const totalSlides = propsJSON?.props?.pageProps?.slideshow?.totalSlides;
+      const totalSlides = getPropsData()?.props?.pageProps?.slideshow?.totalSlides;
 
       if (!totalSlides) {
         console.log("cannot find total slides");
@@ -126,16 +132,15 @@ if (container) {
       // parse slide params
       const urlSearchParams = new URLSearchParams(window.location.search);
 
-      let slideNumber = urlSearchParams.get("slide");
+      const slideNumber = getSlideNumber();
       let nextSlideNumber = 2;
       if (slideNumber) {
-        slideNumber = parseInt(slideNumber, 10);
         nextSlideNumber = Math.min(slideNumber + 1, totalSlides);
       }
       const url = new URL(window.location.href);
       urlSearchParams.set("slide", nextSlideNumber);
       url.search = urlSearchParams;
-      window.history.pushState({}, "", url.toString());
+      history.push(url.toString());
     });
   }
 }
