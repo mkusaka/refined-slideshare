@@ -132,7 +132,7 @@ if (container) {
         urlSearchParams.set("slide", nextSlideNumber);
         url.search = urlSearchParams;
       }
-      history.push(url.toString());
+      history.replace(url.toString());
     });
     const right = document.querySelector("#right-overlay-rfs");
     right?.addEventListener("click", (event) => {
@@ -157,7 +157,7 @@ if (container) {
       const url = new URL(window.location.href);
       urlSearchParams.set("slide", nextSlideNumber);
       url.search = urlSearchParams;
-      history.push(url.toString());
+      history.replace(url.toString());
     });
   }
 }
