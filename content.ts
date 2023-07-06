@@ -1,6 +1,6 @@
+import { createBrowserHistory } from "history";
 import Cookies from "js-cookie";
 import queryString from "query-string";
-import { createBrowserHistory } from "history";
 
 const history = createBrowserHistory();
 
@@ -13,10 +13,10 @@ function getPropsData() {
 function seekIframeInfo() {
   const iframeEmbed:
     | {
-        height: number;
-        width: number;
-        url: string;
-      }
+      height: number;
+      width: number;
+      url: string;
+    }
     | undefined = getPropsData()?.props?.pageProps?.slideshow?.iframeEmbed;
   if (!iframeEmbed) {
     console.log("cannot find valid iframeEmbed");
@@ -90,7 +90,6 @@ function prefetchImages() {
 
   slideImages.forEach((image) => {
     const url = image.baseUrl;
-    console.log({url})
     if (url) {
       let img = new Image();
       img.src = url;
@@ -134,6 +133,26 @@ if (container) {
       }
       history.replace(url.toString());
     });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") {
+        if (left) {
+          const rect = left.getBoundingClientRect();
+
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+
+          const clickEvent = new MouseEvent("click", {
+            view: window,
+            bubbles: true,
+            cancelable: true,
+            clientX: centerX,
+            clientY: centerY
+          });
+
+          left.dispatchEvent(clickEvent);
+        }
+      }
+    })
     const right = document.querySelector("#right-overlay-rfs");
     right?.addEventListener("click", (event) => {
       proxyClickEventToSlideIFrame(event);
@@ -159,6 +178,26 @@ if (container) {
       url.search = urlSearchParams;
       history.replace(url.toString());
     });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight") {
+        if (right) {
+          const rect = right.getBoundingClientRect();
+
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+
+          const clickEvent = new MouseEvent("click", {
+            view: window,
+            bubbles: true,
+            cancelable: true,
+            clientX: centerX,
+            clientY: centerY
+          });
+
+          right.dispatchEvent(clickEvent);
+        }
+      }
+    })
   }
 }
 
