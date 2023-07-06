@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "refined slideshare",
-  "version": "0.14",
+  "version": "0.16",
   "description": "make slideshare's user experience better",
   "permissions": [
     "activeTab",
