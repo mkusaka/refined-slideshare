@@ -3,19 +3,12 @@
   "name": "refined slideshare",
   "version": "0.16",
   "description": "make slideshare's user experience better",
-  "permissions": [
-    "activeTab",
-    "cookies"
-  ],
+  "permissions": ["activeTab", "cookies"],
   "content_scripts": [
     {
-      "matches": [
-        "https://www.slideshare.net/*"
-      ],
+      "matches": ["https://www.slideshare.net/*"],
       "js": ["content.js"]
     }
   ],
-  "host_permissions": [
-    "https://www.slideshare.net/*"
-  ]
+  "host_permissions": ["https://www.slideshare.net/*"]
 }

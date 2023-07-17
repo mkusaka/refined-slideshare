@@ -6,10 +6,10 @@
   "author": "mkusaka <hinoshita1992@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@types/chrome": "^0.0.228",
+    "@types/chrome": "^0.0.241",
     "@types/js-cookie": "^3.0.3",
-    "esbuild": "^0.17.18",
-    "prettier": "^2.8.7"
+    "esbuild": "^0.18.13",
+    "prettier": "^3.0.0"
   },
   "scripts": {
     "package": "yarn build && rm -f pacakge.zip && zip -r package.zip . -x '.git/**' './node_modules/**' '.idea/**' 'yarn.lock' 'package.json' '.gitignore'",

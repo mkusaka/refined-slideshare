@@ -12,10 +12,10 @@ function getPropsData() {
 function seekIframeInfo() {
   const iframeEmbed:
     | {
-      height: number;
-      width: number;
-      url: string;
-    }
+        height: number;
+        width: number;
+        url: string;
+      }
     | undefined = getPropsData()?.props?.pageProps?.slideshow?.iframeEmbed;
   if (!iframeEmbed) {
     console.log("cannot find valid iframeEmbed");
@@ -57,7 +57,7 @@ function proxyClickEventToSlideIFrame(event: Event) {
         bubbles: true,
         cancelable: true,
         view: iframe.contentWindow,
-      })
+      }),
     );
   }
 }
@@ -146,13 +146,13 @@ if (container) {
             bubbles: true,
             cancelable: true,
             clientX: centerX,
-            clientY: centerY
+            clientY: centerY,
           });
 
           left.dispatchEvent(clickEvent);
         }
       }
-    })
+    });
     const right = document.querySelector("#right-overlay-rfs");
     right?.addEventListener("click", (event) => {
       proxyClickEventToSlideIFrame(event);
@@ -191,13 +191,13 @@ if (container) {
             bubbles: true,
             cancelable: true,
             clientX: centerX,
-            clientY: centerY
+            clientY: centerY,
           });
 
           right.dispatchEvent(clickEvent);
         }
       }
-    })
+    });
   }
 }
 
