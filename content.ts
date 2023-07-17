@@ -1,6 +1,5 @@
 import { createBrowserHistory } from "history";
 import Cookies from "js-cookie";
-import queryString from "query-string";
 
 const history = createBrowserHistory();
 
@@ -28,7 +27,7 @@ function seekIframeInfo() {
 
 function parseSlideParam() {
   const { search } = history.location;
-  const { slide } = queryString.parse(search);
+  const slide = new URLSearchParams(search).get("slide");
   if (typeof slide === "string") {
     return parseInt(slide, 10);
   }
@@ -72,6 +71,7 @@ function getSlideNumber() {
   }
   return null;
 }
+
 function setSlideSearchParams(slideNumber: number, withDelete = false) {
   // parse slide params
   const urlSearchParams = new URLSearchParams(window.location.search);
