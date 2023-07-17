@@ -83,19 +83,19 @@ function setSlideSearchParams(slideNumber: number, withDelete = false) {
   return urlSearchParams;
 }
 
-const images: HTMLImageElement[] = [];
 function prefetchImages() {
   const slideImages =
     getPropsData()?.props?.pageProps?.slideshow?.slideImages || [];
 
-  slideImages.forEach((image) => {
-    const url = image.baseUrl;
-    if (url) {
-      let img = new Image();
-      img.src = url;
-      images.push(img);
-    }
-  });
+  const fragment = document.createDocumentFragment();
+  for (let i = 0; i < slideImages.length; i++) {
+    const link = document.createElement("link");
+    link.rel = "prefetch";
+    link.href = slideImages[i].webpSrcset.split(",").map(it => it.trim().split(" ")[0]).at(-1);
+    fragment.appendChild(link);
+  }
+
+  document.head.appendChild(fragment);
 }
 
 const container = document.getElementById("new-player");
@@ -203,4 +203,4 @@ if (container) {
 
 // hide modal ads as default
 Cookies.set("scribd_ad_exit_slideshow_page", true);
-// prefetchImages();
+prefetchImages();
