@@ -2,7 +2,7 @@
   "name": "refined-slideshare",
   "version": "0.17.0",
   "main": "index.js",
-  "repository": "https://github.com/mkusaka/no-ad-slideshare.git",
+  "repository": "https://github.com/mkusaka/refined-slideshare.git",
   "author": "mkusaka <hinoshita1992@gmail.com>",
   "license": "MIT",
   "devDependencies": {
