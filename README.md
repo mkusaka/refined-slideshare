@@ -4,10 +4,7 @@ Chrome extension which provides a better slideshare experience
 
 ## features
 
-- remove ad in slide
-- hide special offer modal
-- add `slide={pageNumber}` format suffix & if you reload this page, current page will be shown again.
-- prefetch images
+- remove ad in whole site
 
 # chrome store
 
