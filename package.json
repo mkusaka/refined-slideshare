@@ -9,7 +9,8 @@
     "@types/chrome": "^0.0.248",
     "@types/js-cookie": "^3.0.5",
     "esbuild": "^0.19.5",
-    "prettier": "^3.0.3"
+    "prettier": "^3.0.3",
+    "typescript": "^5.4.5"
   },
   "scripts": {
     "package": "yarn build && rm -f pacakge.zip && zip -r package.zip . -x '.git/**' './node_modules/**' '.idea/**' 'yarn.lock' 'package.json' '.gitignore'",

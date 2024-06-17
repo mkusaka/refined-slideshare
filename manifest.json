@@ -5,15 +5,30 @@
   "description": "make slideshare's user experience better",
   "content_scripts": [
     {
-      "matches": ["https://www.slideshare.net/*"],
-      "js": ["content.js"]
+      "matches": [
+        "https://www.slideshare.net/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "styles.css"
+      ]
     }
   ],
-  "host_permissions": ["https://www.slideshare.net/*"],
-  "permissions": ["declarativeNetRequest"],
+  "host_permissions": [
+    "https://www.slideshare.net/*"
+  ],
+  "permissions": [
+    "declarativeNetRequest"
+  ],
   "declarative_net_request": {
     "rule_resources": [
-      { "id": "rules1", "path": "rules.json", "enabled": true }
+      {
+        "id": "rules1",
+        "path": "rules.json",
+        "enabled": true
+      }
     ]
   }
 }

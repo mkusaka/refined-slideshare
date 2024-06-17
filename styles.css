@@ -1,0 +1,4 @@
+/* styles.css */
+[class^="StickyVerticalInterstitialAd_root"] {
+    display: none !important;
+}
