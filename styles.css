@@ -2,3 +2,15 @@
 [class^="StickyVerticalInterstitialAd_root"] {
     display: none !important;
 }
+
+[class^="FreestarVideoAd_root"] {
+    display: none !important;
+}
+
+[class^="freestar-ad-container"] {
+    display: none !important;
+}
+
+[data-freestar-ad] {
+    display: none !important;
+}
