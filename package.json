@@ -1,16 +1,15 @@
 {
   "name": "refined-slideshare",
-  "version": "0.20.0",
-  "main": "index.js",
+  "version": "0.21.0",
   "repository": "https://github.com/mkusaka/refined-slideshare.git",
   "author": "mkusaka <hinoshita1992@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "@types/chrome": "^0.0.268",
     "@types/js-cookie": "^3.0.6",
-    "esbuild": "^0.21.5",
+    "esbuild": "^0.23.0",
     "prettier": "^3.3.2",
-    "typescript": "^5.4.5"
+    "typescript": "^5.5.3"
   },
   "scripts": {
     "package": "yarn build && rm -f pacakge.zip && zip -r package.zip . -x '.git/**' './node_modules/**' '.idea/**' 'yarn.lock' 'package.json' '.gitignore'",

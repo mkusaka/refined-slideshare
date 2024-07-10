@@ -1,4 +1,16 @@
 /* styles.css */
+[class*=" StickyVerticalInterstitialAd_root"] {
+    display: none !important;
+}
+
+[class*=" FreestarVideoAd_root"] {
+    display: none !important;
+}
+
+[class*=" freestar-ad-container"] {
+    display: none !important;
+}
+
 [class^="StickyVerticalInterstitialAd_root"] {
     display: none !important;
 }
